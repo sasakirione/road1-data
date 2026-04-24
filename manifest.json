@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "tokyo_major",
+      "name": "東京都主要道路",
+      "description": "甲州街道・靖国通り・明治通り・山手通り・環七通りのデータ",
+      "category": "都市部主要道路",
+      "region": "東京都",
+      "dataVersion": "20260424",
+      "fileSizeBytes": 867677,
+      "checksum": "sha256:a06bb6d55958ac64571057dfa59d05a6821eb51c023d401d7da844f9fcb3682b"
+    }
+  ]
+}
