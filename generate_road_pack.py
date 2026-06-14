@@ -60,14 +60,52 @@ ROADS = [
         "query_name": "環七通り",
         "query_extra": "",
     },
+    {
+        "id": "uchihori_dori",
+        "name": "内堀通り",
+        "query_name": "内堀通り",
+        "query_extra": "",
+    },
+    {
+        "id": "sotobori_dori",
+        "name": "外堀通り",
+        "query_name": "外堀通り",
+        "query_extra": "",
+    },
+    {
+        "id": "aoyama_dori",
+        "name": "青山通り",
+        "query_name": "青山通り",
+        "query_extra": "",
+    },
+    {
+        "id": "meguro_dori",
+        "name": "目黒通り",
+        "query_name": "目黒通り",
+        "query_extra": "",
+        "use_alt_name": True,
+    },
+    {
+        "id": "showa_dori",
+        "name": "昭和通り",
+        "query_name": "昭和通り",
+        "query_extra": "",
+    },
+    {
+        "id": "nikko_kaido",
+        "name": "日光街道",
+        "query_name": "日光街道",
+        "query_extra": "",
+        "use_old_name": True,
+    },
 ]
 
 PACK_ID = "tokyo_major"
 PACK_NAME = "東京都主要道路"
-PACK_DESCRIPTION = "甲州街道・靖国通り・明治通り・山手通り・環七通りのデータ"
+PACK_DESCRIPTION = "甲州街道・靖国通り・明治通り・山手通り・環七通り・内堀通り・外堀通り・青山通り・目黒通り・昭和通り・日光街道のデータ"
 PACK_CATEGORY = "都市部主要道路"
 PACK_REGION = "東京都"
-DATA_VERSION = "20260424"
+DATA_VERSION = "20260614"
 
 # ============================================================
 # 地理計算（純粋関数）
@@ -104,9 +142,33 @@ def total_length(points: list[tuple[float, float]]) -> float:
 
 def fetch_road_ways(road_def: dict) -> list[dict]:
     """Overpass API から指定道路の way 要素を取得"""
-    query = f"""
+    name = road_def['query_name']
+    extra = road_def['query_extra']
+
+    if road_def.get("use_old_name"):
+        # name または old_name でマッチするよう union クエリを使用
+        query = f"""
 [out:json][timeout:60][bbox:{BBOX}];
-way["name"="{road_def['query_name']}"]{road_def['query_extra']};
+(
+  way["name"="{name}"]{extra};
+  way["old_name"="{name}"]{extra};
+);
+out geom;
+"""
+    elif road_def.get("use_alt_name"):
+        # name または alt_name でマッチするよう union クエリを使用
+        query = f"""
+[out:json][timeout:60][bbox:{BBOX}];
+(
+  way["name"="{name}"]{extra};
+  way["alt_name"="{name}"]{extra};
+);
+out geom;
+"""
+    else:
+        query = f"""
+[out:json][timeout:60][bbox:{BBOX}];
+way["name"="{name}"]{extra};
 out geom;
 """
     data = urllib.parse.urlencode({"data": query.strip()}).encode("utf-8")
@@ -279,7 +341,7 @@ def main():
         print()
 
         # Overpass API のレート制限を避ける
-        time.sleep(2)
+        time.sleep(5)
 
     # パック JSON 生成
     pack = {

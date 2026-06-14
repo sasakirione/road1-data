@@ -4,12 +4,12 @@
     {
       "id": "tokyo_major",
       "name": "東京都主要道路",
-      "description": "甲州街道・靖国通り・明治通り・山手通り・環七通りのデータ",
+      "description": "甲州街道・靖国通り・明治通り・山手通り・環七通り・内堀通り・外堀通り・青山通り・目黒通り・昭和通り・日光街道のデータ",
       "category": "都市部主要道路",
       "region": "東京都",
-      "dataVersion": "20260424",
-      "fileSizeBytes": 867677,
-      "checksum": "sha256:a06bb6d55958ac64571057dfa59d05a6821eb51c023d401d7da844f9fcb3682b"
+      "dataVersion": "20260614",
+      "fileSizeBytes": 1211112,
+      "checksum": "sha256:710c639e8f0a6bb2b0fc0c39c7d142bf133354b962c824d6ed015ac7523f1d31"
     }
   ]
 }
